@@ -1,0 +1,7 @@
+import { ObjectId } from "mongodb";
+import { NextResponse } from "next/server";
+import { getSession } from "@/lib/auth";
+import { getDb } from "@/lib/database";
+import { normalizeClassroom } from "@/lib/classroom";
+export async function GET() { const session = await getSession(); if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const classrooms = await (await getDb()).collection("classrooms").find({ userId: new ObjectId(session.sub) }).sort({ name: 1 }).toArray(); return NextResponse.json({ classrooms }); }
+export async function POST(request) { const session = await getSession(); if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 }); const normalized = normalizeClassroom(await request.json()); if (normalized.error) return NextResponse.json({ error: normalized.error }, { status: 400 }); const db = await getDb(); const duplicate = await db.collection("classrooms").findOne({ userId: new ObjectId(session.sub), name: normalized.value.name }); if (duplicate) return NextResponse.json({ error: "A classroom with this name already exists." }, { status: 409 }); const result = await db.collection("classrooms").insertOne({ userId: new ObjectId(session.sub), ...normalized.value, createdAt: new Date(), updatedAt: new Date() }); return NextResponse.json({ classroom: { _id: result.insertedId, ...normalized.value } }, { status: 201 }); }

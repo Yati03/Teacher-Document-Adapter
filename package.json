@@ -1,0 +1,33 @@
+{
+  "name": "teacher-document-adapter",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yati03/Teacher-Document-Adapter.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@openai/agents": "^0.13.5",
+    "bcryptjs": "latest",
+    "jose": "latest",
+    "mongodb": "latest",
+    "next": "^16.2.11",
+    "openai": "^6.48.0",
+    "react": "latest",
+    "react-dom": "latest",
+    "zod": "^4.4.3"
+  },
+  "bugs": {
+    "url": "https://github.com/Yati03/Teacher-Document-Adapter/issues"
+  },
+  "homepage": "https://github.com/Yati03/Teacher-Document-Adapter#readme"
+}
